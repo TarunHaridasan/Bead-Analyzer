@@ -4,12 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-opencv-contrib-python = "==4.5.5.62"
-openpyxl = "*"
+opencv-python = "*"
 pyqt5 = "*"
 pyqt5-tools = "*"
+openpyxl = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
+python_full_version = "3.11.3"
