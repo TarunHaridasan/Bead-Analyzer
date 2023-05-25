@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from GUI.GUI import Ui_MainWindow
+from GUI.main import Ui_MainWindow
 from data import Data, Tracker
 import cv2
 import sys
@@ -14,16 +14,16 @@ class Window():
         self.MainWindow = MainWindow
         self.ui = ui
         self.app = app
-        self.ui.search.clicked.connect(self.intiateData)
-        self.ui.remove.clicked.connect(self.removeBox)
-        self.ui.add.clicked.connect(self.addBox)
-        self.ui.remove.setStyleSheet("")
-        self.ui.add.setStyleSheet("")
-        self.ui.proceed.setStyleSheet("")
-        self.ui.boundingBoxes.currentItemChanged.connect(self.highlightBounding)
-        self.removeActive = 0  
-        self.addActive = 0
-        self.ui.proceed.clicked.connect(self.run)
+        # self.ui.search.clicked.connect(self.intiateData)
+        # self.ui.remove.clicked.connect(self.removeBox)
+        # self.ui.add.clicked.connect(self.addBox)
+        # self.ui.remove.setStyleSheet("")
+        # self.ui.add.setStyleSheet("")
+        # self.ui.proceed.setStyleSheet("")
+        # self.ui.boundingBoxes.currentItemChanged.connect(self.highlightBounding)
+        # self.removeActive = 0  
+        # self.addActive = 0
+        # self.ui.proceed.clicked.connect(self.run)
     #Display the window
     def start(self):
         self.MainWindow.show()
@@ -31,7 +31,6 @@ class Window():
     #Folder search
     def intiateData(self):
         fp = QtWidgets.QFileDialog.getExistingDirectory(self.MainWindow, 'Select Folder')
-        #fp = "C:\\Users\\furio\\Desktop\\Fluorescent-Bead-Analyzer\\Data"
         self.ui.folderPath.setText(fp)
         self.data = Data(fp) 
         self.data.findBeads()

@@ -98,7 +98,7 @@ font-size: 18px;</string>
        </layout>
       </item>
       <item row="0" column="0" rowspan="2">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="frame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -125,9 +125,6 @@ font-size: 18px;</string>
         </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../../../Downloads/test.qrc">:/newPrefix/Desktop/Bead Analyzer/Bead Data/control 4/T00001C01Z001.tif</pixmap>
         </property>
         <property name="scaledContents">
          <bool>false</bool>
@@ -164,6 +161,12 @@ font-size: 18px;</string>
      <height>28</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuNew">
+    <property name="title">
+     <string>New</string>
+    </property>
+   </widget>
+   <addaction name="menuNew"/>
   </widget>
  </widget>
  <resources>
