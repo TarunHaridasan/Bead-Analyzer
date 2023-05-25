@@ -114,7 +114,7 @@ class SubTracker():
         self.tracker.init(image, bounding)
         self.active = 1
     def update(self, image): #Update tracker frame
-        print(self.active, self.prev, self.current)
+        #print(self.active, self.prev, self.current)
         if not self.active: 
             return
         retval, box = self.tracker.update(image)

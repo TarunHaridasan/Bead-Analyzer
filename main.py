@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from frame import Ui_MainWindow
+from GUI.GUI import Ui_MainWindow
 from data import Data, Tracker
 import cv2
 import sys
@@ -34,7 +34,7 @@ class Window():
         #fp = "C:\\Users\\furio\\Desktop\\Fluorescent-Bead-Analyzer\\Data"
         self.ui.folderPath.setText(fp)
         self.data = Data(fp) 
-        #self.data.findBeads()
+        self.data.findBeads()
         self.data.print(self.data.get(0))
         self.updateList()
         self.ui.add.setEnabled(1)
