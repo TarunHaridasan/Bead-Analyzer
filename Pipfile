@@ -8,6 +8,9 @@ pyqt5 = "*"
 pyqt5-tools = "*"
 openpyxl = "*"
 opencv-contrib-python = "*"
+pip = "*"
+install = "*"
+pyqtdarktheme = "*"
 
 [dev-packages]
 

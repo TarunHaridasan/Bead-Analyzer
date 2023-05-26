@@ -7,7 +7,7 @@ class Console():
     def __init__(self, consoleWidget):
         self.widget = consoleWidget
     #Add entry into the console
-    def add(self, message, colour = (0,0,0)):
+    def add(self, message, colour = (255,255,255)):
         time = datetime.now().strftime("%H:%M:%S")
         item = QListWidgetItem(f'>[{time}] {message}')
         item.setForeground(QColor(colour[0], colour[1], colour[2]))
