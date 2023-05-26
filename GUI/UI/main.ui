@@ -134,21 +134,7 @@ font-size: 18px;</string>
      </layout>
     </item>
     <item>
-     <widget class="QScrollArea" name="console">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>1276</width>
-         <height>119</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
+     <widget class="QListWidget" name="console"/>
     </item>
    </layout>
   </widget>
@@ -161,16 +147,20 @@ font-size: 18px;</string>
      <height>28</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuNew">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>New</string>
+     <string>File</string>
     </property>
+    <addaction name="newAnalysis"/>
    </widget>
-   <addaction name="menuNew"/>
+   <addaction name="menuFile"/>
   </widget>
+  <action name="newAnalysis">
+   <property name="text">
+    <string>New Analysis</string>
+   </property>
+  </action>
  </widget>
- <resources>
-  <include location="../../../Downloads/test.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

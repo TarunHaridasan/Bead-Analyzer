@@ -2,38 +2,40 @@
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>250</height>
+    <width>700</width>
+    <height>275</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
-    <height>250</height>
+    <width>700</width>
+    <height>275</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
-    <height>250</height>
+    <width>900</width>
+    <height>275</height>
    </size>
   </property>
-  <property name="windowTitle">
-   <string>Dialog</string>
+  <property name="font">
+   <font>
+    <family>Calibri</family>
+    <pointsize>12</pointsize>
+   </font>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font-family: Calibri;
-font-size: 18px;</string>
+  <property name="windowTitle">
+   <string>New Analysis</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -41,7 +43,7 @@ font-size: 18px;</string>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -49,7 +51,7 @@ font-size: 18px;</string>
        <property name="font">
         <font>
          <family>Calibri</family>
-         <pointsize>-1</pointsize>
+         <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -59,26 +61,17 @@ font-size: 18px;</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="fpInput">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
+     <item row="0" column="1" colspan="2">
+      <widget class="QLineEdit" name="inputFP">
        <property name="readOnly">
         <bool>true</bool>
        </property>
        <property name="placeholderText">
-        <string>File Path to .TIF</string>
+        <string>Filepath to .TIF</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="3">
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -88,14 +81,14 @@ font-size: 18px;</string>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>25</width>
-         <height>17</height>
+         <width>40</width>
+         <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="searchInput">
+     <item row="0" column="4">
+      <widget class="QPushButton" name="inputSearch">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -110,7 +103,7 @@ font-size: 18px;</string>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -118,7 +111,7 @@ font-size: 18px;</string>
        <property name="font">
         <font>
          <family>Calibri</family>
-         <pointsize>-1</pointsize>
+         <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -128,27 +121,18 @@ font-size: 18px;</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="fpOutput">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLineEdit" name="outputFP">
        <property name="readOnly">
         <bool>true</bool>
        </property>
        <property name="placeholderText">
-        <string>File Path to .XLSX</string>
+        <string>Filepath to .XLSX</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <spacer name="horizontalSpacer_3">
+     <item row="1" column="3">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -157,14 +141,14 @@ font-size: 18px;</string>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>25</width>
-         <height>17</height>
+         <width>40</width>
+         <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
-     <item row="1" column="3">
-      <widget class="QPushButton" name="searchOutput">
+     <item row="1" column="4">
+      <widget class="QPushButton" name="outputSearch">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -179,7 +163,7 @@ font-size: 18px;</string>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -187,7 +171,7 @@ font-size: 18px;</string>
        <property name="font">
         <font>
          <family>Calibri</family>
-         <pointsize>-1</pointsize>
+         <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -197,26 +181,10 @@ font-size: 18px;</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="fps">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximum">
-        <number>1000</number>
-       </property>
-       <property name="value">
-        <number>32</number>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -224,7 +192,7 @@ font-size: 18px;</string>
        <property name="font">
         <font>
          <family>Calibri</family>
-         <pointsize>-1</pointsize>
+         <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -236,20 +204,24 @@ font-size: 18px;</string>
      </item>
      <item row="3" column="1">
       <widget class="QDoubleSpinBox" name="conversion">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="decimals">
         <number>2</number>
        </property>
        <property name="maximum">
-        <double>1000.000000000000000</double>
+        <double>100.000000000000000</double>
        </property>
        <property name="value">
         <double>2.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="fps">
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+       <property name="value">
+        <number>32</number>
        </property>
       </widget>
      </item>
@@ -257,9 +229,6 @@ font-size: 18px;</string>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -270,14 +239,6 @@ font-size: 18px;</string>
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="7" margin="99"/>
- <tabstops>
-  <tabstop>searchInput</tabstop>
-  <tabstop>searchOutput</tabstop>
-  <tabstop>fps</tabstop>
-  <tabstop>conversion</tabstop>
-  <tabstop>buttonBox</tabstop>
- </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -287,12 +248,12 @@ font-size: 18px;</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>229</x>
-     <y>222</y>
+     <x>248</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>249</y>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
@@ -303,31 +264,14 @@ font-size: 18px;</string>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>297</x>
-     <y>228</y>
+     <x>316</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
-     <y>249</y>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
  </connections>
- <designerdata>
-  <property name="gridDeltaX">
-   <number>10</number>
-  </property>
-  <property name="gridDeltaY">
-   <number>10</number>
-  </property>
-  <property name="gridSnapX">
-   <bool>true</bool>
-  </property>
-  <property name="gridSnapY">
-   <bool>true</bool>
-  </property>
-  <property name="gridVisible">
-   <bool>true</bool>
-  </property>
- </designerdata>
 </ui>
