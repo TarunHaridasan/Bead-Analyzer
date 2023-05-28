@@ -33,6 +33,43 @@ font-size: 18px;</string>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0" rowspan="2">
+       <widget class="QLabel" name="frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>900</width>
+          <height>800</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>900</width>
+          <height>800</height>
+         </size>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
@@ -60,31 +97,17 @@ font-size: 18px;</string>
       </item>
       <item row="0" column="1">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0" colspan="3">
-         <widget class="QTableWidget" name="bboxes">
-          <column>
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Coordinates</string>
-           </property>
-          </column>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="remove">
+          <property name="text">
+           <string>Remove</string>
+          </property>
          </widget>
         </item>
         <item row="0" column="2">
          <widget class="QPushButton" name="reset">
           <property name="text">
            <string>Reset</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="remove">
-          <property name="text">
-           <string>Remove</string>
           </property>
          </widget>
         </item>
@@ -95,41 +118,10 @@ font-size: 18px;</string>
           </property>
          </widget>
         </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QListWidget" name="bboxes"/>
+        </item>
        </layout>
-      </item>
-      <item row="0" column="0" rowspan="2">
-       <widget class="QLabel" name="frame">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>900</width>
-          <height>800</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>900</width>
-          <height>800</height>
-         </size>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="scaledContents">
-         <bool>false</bool>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>

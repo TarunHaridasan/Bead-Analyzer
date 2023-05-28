@@ -24,9 +24,6 @@ class SubTracker():
                 self.active = 0
             self.updateDistance()
             self.updateFrames()
-    def draw(self, image): #Draw bounding boxes on rectangle
-        cv2.rectangle(image, self.current, (0, 255, 21), 2)
-        cv2.imshow('Bead Analyzer', image)
     def updateDistance(self): #Update the distance
         p1, p2 = findCntrPnt(self.prev), findCntrPnt(self.current)
         x1, y1, x2, y2 = p1[0], p1[1], p2[0], p2[1] 

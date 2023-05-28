@@ -23,12 +23,12 @@ class Tracker:
     def updateDisplacements(self):
         for tracker in self.trackers:
             tracker.updateDisplacement()
-    def draw(self):
+    def newBoxes(self):
+        boxes = []
         for tracker in self.trackers:
-            tracker.draw(self.image)
-    def saveData(self):
-        conversion = 2
-        fps = 64.47
+            boxes.append(tracker.current)
+        return boxes
+    def saveData(self, output, conversion, fps):
         wb = Workbook()
         ws = wb.active
         ws.append(["Blob", "Distance (um)", "Displacement (um)", "Frames", "Speed (um/s)", "Velocity (um/s)", "Start Coordinates", "End Coordinates"])
@@ -39,11 +39,11 @@ class Tracker:
             distance = tracker.distance * conversion
             displacement = tracker.displacement * conversion
             frames = tracker.frames
-            speed = distance / (frames*5/fps)
-            velocity = displacement / (frames*5/fps)
+            speed = distance / (frames/fps)
+            velocity = displacement / (frames/fps)
             initial = tracker.start
             final = tracker.current
             ws.append([blob, distance, displacement, frames, speed, velocity, str(initial), str(final)])
-        wb.save("data.xlsx")
+        wb.save(output)
 
         

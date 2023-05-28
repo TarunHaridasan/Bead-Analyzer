@@ -8,7 +8,7 @@ class Data:
         self.images = []
         self.boundingBoxes = []  
         files = os.listdir(self.fp)
-        for i in range(0,len(files),5):
+        for i in range(0,len(files)):
             item = files[i]
             fp = f'{self.fp}//{item}'
             image = cv2.imread(fp)
@@ -17,18 +17,6 @@ class Data:
     #Get an image
     def get(self, index):
         return self.images[index]
-    #Print all bounding boxes on image
-    def print(self, image, highlight = None):
-        frame = image.copy()
-        for i in range(len(self.boundingBoxes)):
-            box = self.boundingBoxes[i]
-            x,y,w,h = box[0], box[1], box[2], box[3]
-            if i == highlight:
-                cv2.rectangle(frame,(x,y),(x+w,y+h),(0, 255, 21),2)
-            else:
-                cv2.rectangle(frame,(x,y),(x+w,y+h),(255, 0, 21),2)    
-        cv2.imshow("Beads", frame)      
-        return frame 
     #Initially detect fluorescent beads off an image
     def findBeads(self):
         image = self.get(0).copy()
@@ -67,17 +55,13 @@ class Data:
                 return [x1, y1, w, h]
         return 0
     #Remove bounding box
-    def removeBounding(self, event, x, y, flags, params):
-        if event == cv2.EVENT_LBUTTONUP:
-            box = self.findBox(x,y)
-            if box!=0:
-                self.boundingBoxes.remove(box)
-                self.print(self.get(0))
+    def removeBounding(self, x, y):
+        box = self.findBox(x,y)
+        if box!=0:
+            self.boundingBoxes.remove(box)
     #Add bounding box
-    def addBounding(self):
-        while True:
-            x,y,w,h = cv2.selectROI("Beads", self.print(self.get(0)))
-            if x+y+w+h == 0:
-                self.print(self.get(0))
-                return
-            self.boundingBoxes.append([x,y,w,h])
+    def addBounding(self, x, y, x2,y2):
+        w = x2-x
+        h = y2-y
+        self.boundingBoxes.append([x,y,w,h])
+            
