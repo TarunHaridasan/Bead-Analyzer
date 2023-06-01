@@ -51,26 +51,17 @@ class Data:
     
     #New bead finder
     def blobFinder(self):
+        #Binarize
         img1 = self.get(0).copy()
-        img2 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-        ret, thresh = cv2.threshold(img2, 190, 255, cv2.THRESH_BINARY)
-        #img3 = cv2.adaptiveThreshold(img2,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,11,15)
-        cv2.imshow("Keypoints", thresh)
-        # blob = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 9, 10)
-        # # #Opening (remove noise)
-        # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
-        # blob = cv2.morphologyEx(blob, cv2.MORPH_OPEN, kernel)
-        # #Closing
-        # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
-        # blob = cv2.morphologyEx(blob, cv2.MORPH_CLOSE, kernel)
+        img2 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY) #Gray scale
+        img3 = cv2.medianBlur(img2, 9)
+        ret, thresh = cv2.threshold(img3, int(np.mean(img3) + ((np.std(img3)*2))), 255, cv2.THRESH_BINARY)
+        cv2.imshow("Binarized Image", thresh)
 
-       # detector = cv2.SimpleBlobDetector_create()
-        #keypoints = detector.detect(img3)
-        #print(keypoints)
-        #im_with_keypoints = cv2.drawKeypoints(img3, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        
-        # Show keypoints
-        #cv2.imshow("Keypoints", im_with_keypoints)
+        #Contours
+        contours, hier = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        img4 = cv2.drawContours(img1, contours, -1, (0,0,255), 2)
+        cv2.imshow("Contours", img4)
 
     #Return the bounding box the x,y coordinates are inside
     def findBox(self,x,y):

@@ -68,8 +68,8 @@ class Window():
         self.conversion = self.Dialog.ui.conversion.value()
 
         #REMOVE AFTER
-        self.inputFP = "C:\\Users\\furio\\Desktop\\Bead-Analyzer\\Data"
-        self.outputFP = "C:\\Users\\furio\\Desktop\\Bead-Analyzer\\data.xlsx"
+        self.inputFP = ".\\Data\\control 4"
+        self.outputFP = ".\\data.xlsx"
         self.fps = 64
         self.conversion = 2
 
