@@ -1,6 +1,6 @@
 from openpyxl import Workbook
-from openpyxl.styles import Font
 from Classes.SubTracker import SubTracker
+from openpyxl.styles.fonts import Font
 
 class Tracker:
     def __init__(self, image):
@@ -31,8 +31,15 @@ class Tracker:
     def saveData(self, output, conversion, fps):
         wb = Workbook()
         ws = wb.active
+        ws.append(["Time Started", "Elapsed Time", "Images"])
+        ws.append([])
         ws.append(["Blob", "Distance (um)", "Displacement (um)", "Frames", "Speed (um/s)", "Velocity (um/s)", "Start Coordinates", "End Coordinates"])
-        ws["A1"].font, ws["B1"].font, ws["C1"].font, ws["D1"].font, ws["E1"].font, ws["F1"].font = Font(bold=True), Font(bold=True), Font(bold=True), Font(bold=True), Font(bold=True), Font(bold=True)
+        
+        bold = Font(bold=True)
+        for i in ["A1", "B1", "C1", "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"]:
+            ws[i].font = bold
+        
+        
         for i in range(len(self.trackers)):
             blob = f'Blob {i}' 
             tracker = self.trackers[i]           
@@ -44,6 +51,7 @@ class Tracker:
             initial = tracker.start
             final = tracker.current
             ws.append([blob, distance, displacement, frames, speed, velocity, str(initial), str(final)])
+        
         wb.save(output)
 
         

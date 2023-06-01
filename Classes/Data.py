@@ -1,5 +1,6 @@
 import cv2
 import os
+import numpy as np
 
 class Data:
     #Load all every 5th image in the folder
@@ -13,6 +14,7 @@ class Data:
             fp = f'{self.fp}//{item}'
             image = cv2.imread(fp)
             self.images.append(image)
+            break
         self.size = len(self.images)
     #Get an image
     def get(self, index):
@@ -46,6 +48,30 @@ class Data:
                 boundingBoxes.append([x,y,w,h])
         self.boundingBoxes = boundingBoxes
         return boundingBoxes
+    
+    #New bead finder
+    def blobFinder(self):
+        img1 = self.get(0).copy()
+        img2 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+        ret, thresh = cv2.threshold(img2, 190, 255, cv2.THRESH_BINARY)
+        #img3 = cv2.adaptiveThreshold(img2,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,11,15)
+        cv2.imshow("Keypoints", thresh)
+        # blob = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 9, 10)
+        # # #Opening (remove noise)
+        # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
+        # blob = cv2.morphologyEx(blob, cv2.MORPH_OPEN, kernel)
+        # #Closing
+        # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
+        # blob = cv2.morphologyEx(blob, cv2.MORPH_CLOSE, kernel)
+
+       # detector = cv2.SimpleBlobDetector_create()
+        #keypoints = detector.detect(img3)
+        #print(keypoints)
+        #im_with_keypoints = cv2.drawKeypoints(img3, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        
+        # Show keypoints
+        #cv2.imshow("Keypoints", im_with_keypoints)
+
     #Return the bounding box the x,y coordinates are inside
     def findBox(self,x,y):
         for box in self.boundingBoxes:

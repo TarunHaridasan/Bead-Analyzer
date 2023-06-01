@@ -26,17 +26,6 @@ class Window():
         self.Dialog = QtWidgets.QDialog()
         self.Dialog.ui = GUI.settings.Ui_Dialog()
         self.Dialog.ui.setupUi(self.Dialog)
-        self.bindButtons()
-        #Console window
-        self.console = Console(self.Main.ui.console)
-    
-    #Display the window
-    def start(self):
-        self.Main.show()
-        sys.exit(self.app.exec_())
-    
-    #Connect signal emissions to functions
-    def bindButtons(self):
         self.Main.ui.newAnalysis.triggered.connect(self.Dialog.exec)
         self.Dialog.ui.inputSearch.clicked.connect(self.searchInput)
         self.Dialog.ui.outputSearch.clicked.connect(self.searchOutput)
@@ -49,7 +38,17 @@ class Window():
         self.addBoxStart=1
         self.newBoxCoordinates = []
         self.Main.ui.start.clicked.connect(self.run)
-        #self.Main.ui.progressBar.
+        #Console window
+        self.console = Console(self.Main.ui.console)
+    
+    #Display the window
+    def start(self):
+        self.Main.show()
+        #REMOVE AFTER
+        self.saveSettings()
+        self.data.blobFinder()
+
+        sys.exit(self.app.exec_())
     
     #Collect input data
     def searchInput(self):
@@ -67,6 +66,12 @@ class Window():
         self.outputFP = self.Dialog.ui.outputFP.text()
         self.fps = self.Dialog.ui.fps.value()
         self.conversion = self.Dialog.ui.conversion.value()
+
+        #REMOVE AFTER
+        self.inputFP = "C:\\Users\\furio\\Desktop\\Bead-Analyzer\\Data"
+        self.outputFP = "C:\\Users\\furio\\Desktop\\Bead-Analyzer\\data.xlsx"
+        self.fps = 64
+        self.conversion = 2
 
         #Load Data
         self.data = Data(self.inputFP)

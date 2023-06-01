@@ -143,4 +143,4 @@ class Ui_Dialog(object):
         self.outputFP.setPlaceholderText(_translate("Dialog", "Filepath to .XLSX"))
         self.outputSearch.setText(_translate("Dialog", "Search"))
         self.label_3.setText(_translate("Dialog", "FPS:"))
-        self.label_4.setText(_translate("Dialog", "Conversion (um/s):"))
+        self.label_4.setText(_translate("Dialog", "Conversion (um/pixel):"))
