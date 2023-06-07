@@ -55,7 +55,7 @@ class Window():
 
     #Collect output data
     def searchOutput(self):
-        fp = QtWidgets.QFileDialog.getOpenFileName(None, 'Select File')[0]
+        fp = QtWidgets.QFileDialog.getExistingDirectory(None, 'Select Folder')
         self.Dialog.ui.outputFP.setText(fp)
 
     #Save settings
@@ -65,7 +65,6 @@ class Window():
         self.outputFP = self.Dialog.ui.outputFP.text()
         self.fps = self.Dialog.ui.fps.value()
         self.conversion = self.Dialog.ui.conversion.value()
-        self.outputFP = "./Output" #Default output path
         self.data = Data(self.inputFP)
         self.data.findBeads()   
         self.print(self.data.get(0))     

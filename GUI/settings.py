@@ -137,10 +137,10 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "New Analysis"))
         self.label.setText(_translate("Dialog", "Input:"))
-        self.inputFP.setPlaceholderText(_translate("Dialog", "Filepath to .TIF"))
+        self.inputFP.setPlaceholderText(_translate("Dialog", "Filepath to Input Folder"))
         self.inputSearch.setText(_translate("Dialog", "Search"))
         self.label_2.setText(_translate("Dialog", "Output:"))
-        self.outputFP.setPlaceholderText(_translate("Dialog", "Filepath to .XLSX"))
+        self.outputFP.setPlaceholderText(_translate("Dialog", "Filepath to Output Folder"))
         self.outputSearch.setText(_translate("Dialog", "Search"))
         self.label_3.setText(_translate("Dialog", "FPS:"))
         self.label_4.setText(_translate("Dialog", "Conversion (um/pixel):"))

@@ -42,7 +42,7 @@ class Data:
         for cnt in contours:
             areas.append(cv2.contourArea(cnt))
         areas.sort()
-        a = areas[int(len(areas)*0.50)]
+        a = areas[int(len(areas)*0.25)]
         #Remove bounding boxes with area too small
         boundingBoxes = []
         for cnt in contours:

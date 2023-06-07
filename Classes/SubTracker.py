@@ -21,7 +21,7 @@ class SubTracker():
             self.active = 0
             return
         #Out of bound
-        if box[0]<20 or box[0]>880 or box[1]<20 or box[1]>780:
+        if box[0]<30 or box[0]>870 or box[1]<30 or box[1]>770:
             self.active = 0
             return
         #All good
