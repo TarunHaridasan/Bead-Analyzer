@@ -47,6 +47,8 @@ class Tracker:
             distance = tracker.distance * conversion
             displacement = tracker.displacement * conversion
             frames = tracker.frames
+            if frames == 0:
+                continue
             speed = distance / (frames/fps)
             velocity = displacement / (frames/fps)
             initial = tracker.start
