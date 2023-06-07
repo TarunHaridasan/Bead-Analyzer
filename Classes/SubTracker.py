@@ -13,17 +13,22 @@ class SubTracker():
         self.tracker.init(image, bounding)
         self.active = 1
     def update(self, image): #Update tracker frame
-        #print(self.active, self.prev, self.current)
         if not self.active: 
-            return
+            return        
         retval, box = self.tracker.update(image)
-        self.prev = self.current
-        if retval:            
-            self.current = box
-            if self.current[0] < 50 or self.current[0]>850 or self.current[1]<50 or self.current[1]>750:
-                self.active = 0
-            self.updateDistance()
-            self.updateFrames()
+        #Unsuccesful
+        if not retval:
+            self.active = 0
+            return
+        #Out of bound
+        if box[0]<20 or box[0]>880 or box[1]<20 or box[1]>780:
+            self.active = 0
+            return
+        #All good
+        self.prev = self.current           
+        self.current = box
+        self.updateDistance()
+        self.updateFrames()
     def updateDistance(self): #Update the distance
         p1, p2 = findCntrPnt(self.prev), findCntrPnt(self.current)
         x1, y1, x2, y2 = p1[0], p1[1], p2[0], p2[1] 

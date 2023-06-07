@@ -45,9 +45,7 @@ class Window():
     def start(self):
         self.Main.show()
         #REMOVE AFTER
-        self.saveSettings()
-        self.data.blobFinder()
-
+        #self.saveSettings()
         sys.exit(self.app.exec_())
     
     #Collect input data
@@ -63,17 +61,11 @@ class Window():
     #Save settings
     def saveSettings(self):        
         self.inputFP = self.Dialog.ui.inputFP.text()
+        self.folderName = self.inputFP.split("/")[-1]
         self.outputFP = self.Dialog.ui.outputFP.text()
         self.fps = self.Dialog.ui.fps.value()
         self.conversion = self.Dialog.ui.conversion.value()
-
-        #REMOVE AFTER
-        self.inputFP = ".\\Data\\control 4"
-        self.outputFP = ".\\data.xlsx"
-        self.fps = 64
-        self.conversion = 2
-
-        #Load Data
+        self.outputFP = "./Output" #Default output path
         self.data = Data(self.inputFP)
         self.data.findBeads()   
         self.print(self.data.get(0))     
@@ -182,8 +174,9 @@ class Window():
     def analysisFinished(self):        
         self.Main.ui.progressBar.setValue(100)
         self.tracker.updateDisplacements()
-        self.tracker.saveData(self.outputFP, self.conversion, self.fps) #Also send fps and conversion
-        self.console.add(f'Analysis completed. Data saved into {self.outputFP}')
+        output = f'{self.outputFP}/{self.folderName}.xlsx'
+        self.tracker.saveData(output, self.conversion, self.fps) #Also send fps and conversion
+        self.console.add(f'Analysis completed. Data saved into {output}')
 
 
 
