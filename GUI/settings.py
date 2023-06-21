@@ -119,7 +119,7 @@ class Ui_Dialog(object):
         self.gridLayout.addWidget(self.conversion, 3, 1, 1, 1)
         self.fps = QtWidgets.QSpinBox(Dialog)
         self.fps.setMaximum(1000)
-        self.fps.setProperty("value", 32)
+        self.fps.setProperty("value", 64)
         self.fps.setObjectName("fps")
         self.gridLayout.addWidget(self.fps, 2, 1, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout)

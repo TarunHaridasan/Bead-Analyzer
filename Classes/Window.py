@@ -60,11 +60,15 @@ class Window():
 
     #Save settings
     def saveSettings(self):        
-        self.inputFP = self.Dialog.ui.inputFP.text()
-        self.folderName = self.inputFP.split("/")[-1]
+        self.inputFP = self.Dialog.ui.inputFP.text()        
         self.outputFP = self.Dialog.ui.outputFP.text()
         self.fps = self.Dialog.ui.fps.value()
         self.conversion = self.Dialog.ui.conversion.value()
+
+        if self.inputFP == "" or self.outputFP == "" or self.fps == "" or self.conversion == "":
+            return
+
+        self.folderName = self.inputFP.split("/")[-1]
         self.data = Data(self.inputFP)
         self.data.findBeads()   
         self.print(self.data.get(0))     
