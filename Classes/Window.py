@@ -20,7 +20,7 @@ class Window():
     def __init__(self):
         #Main window
         self.app = QtWidgets.QApplication(sys.argv)
-        qdarktheme.setup_theme(custom_colors={"primary": "#fa05c1"})
+        qdarktheme.setup_theme(custom_colors={"primary": "#03c6fc"})
         self.Main = QtWidgets.QMainWindow()
         self.Main.ui = GUI.main.Ui_MainWindow()
         self.Main.ui.setupUi(self.Main)
