@@ -81,7 +81,10 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
         self.newAnalysis = QtWidgets.QAction(MainWindow)
         self.newAnalysis.setObjectName("newAnalysis")
+        self.actionNext = QtWidgets.QAction(MainWindow)
+        self.actionNext.setObjectName("actionNext")
         self.menuFile.addAction(self.newAnalysis)
+        self.menuFile.addAction(self.actionNext)
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -97,3 +100,14 @@ class Ui_MainWindow(object):
         self.add.setText(_translate("MainWindow", "Add"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.newAnalysis.setText(_translate("MainWindow", "New Analysis"))
+        self.actionNext.setText(_translate("MainWindow", "Next"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

@@ -144,12 +144,18 @@ font-size: 18px;</string>
      <string>File</string>
     </property>
     <addaction name="newAnalysis"/>
+    <addaction name="actionNext"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <action name="newAnalysis">
    <property name="text">
     <string>New Analysis</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="text">
+    <string>Next</string>
    </property>
   </action>
  </widget>

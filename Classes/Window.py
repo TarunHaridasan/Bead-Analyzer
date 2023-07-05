@@ -10,7 +10,9 @@ from Classes.Console import Console
 import qdarktheme
 import time
 from Classes.Tracker import Tracker
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
+from PyQt5.QtCore import QObject, QThread, pyqtSignal, QThreadPool
+import os
+
 
 
 class Window():
@@ -27,6 +29,7 @@ class Window():
         self.Dialog.ui = GUI.settings.Ui_Dialog()
         self.Dialog.ui.setupUi(self.Dialog)
         self.Main.ui.newAnalysis.triggered.connect(self.Dialog.exec)
+        self.Main.ui.actionNext.triggered.connect(self.runNext)
         self.Dialog.ui.inputSearch.clicked.connect(self.searchInput)
         self.Dialog.ui.outputSearch.clicked.connect(self.searchOutput)
         self.Dialog.ui.buttonBox.accepted.connect(self.saveSettings)
@@ -38,6 +41,7 @@ class Window():
         self.addBoxStart=1
         self.newBoxCoordinates = []
         self.Main.ui.start.clicked.connect(self.run)
+        
         #Console window
         self.console = Console(self.Main.ui.console)
     
@@ -68,13 +72,16 @@ class Window():
         if self.inputFP == "" or self.outputFP == "" or self.fps == "" or self.conversion == "":
             return
 
-        self.folderName = self.inputFP.split("/")[-1]
-        self.data = Data(self.inputFP)
-        self.data.findBeads()   
-        self.print(self.data.get(0))     
-        self.updateList()
-        self.console.add(f'Settings Saved. Load {self.data.size} images')
+        self.queue = []
+        self.currentPosition = 0
+        for i in os.listdir(self.inputFP):
+            self.queue.append(f'{self.inputFP}/{i}')
 
+        self.console.add(f'Settings Saved. Loaded {len(self.queue)} videos into queue.')
+
+        self.threadpool = QThreadPool()
+        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
+       
     #Print image and bounding boxes
     def print(self, image):
         #Add boxes around the blobs
@@ -149,6 +156,16 @@ class Window():
         print(index)
         self.data.print(self.data.get(0), index)
 
+    #Open up the next video
+    def runNext(self):
+        fp = self.queue[self.currentPosition]
+        self.folderName = fp.split("/")[-1]
+        self.data = Data(fp)
+        self.data.findBeads()   
+        self.print(self.data.get(0))     
+        self.updateList()
+        self.console.add(f'Loaded {self.folderName}. {self.currentPosition}/{len((self.queue))} in queue')
+
     #Run the tracking on all the boxes
     def run(self):
         self.console.add("Analysis started")
@@ -180,8 +197,6 @@ class Window():
         output = f'{self.outputFP}/{self.folderName}.xlsx'
         self.tracker.saveData(output, self.conversion, self.fps) #Also send fps and conversion
         self.console.add(f'Analysis completed. Data saved into {output}')
-
-
 
 #Analysis thread
 class Worker(QObject):
