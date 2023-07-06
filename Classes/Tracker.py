@@ -4,11 +4,14 @@ from openpyxl.styles.fonts import Font
 from datetime import datetime
 
 class Tracker:
-    def __init__(self, image):
+    def __init__(self, image, output, conversion, fps):
         self.trackers = []
         self.image = image
         self.size = 0
         self.start = datetime.now()
+        self.output = output
+        self.conversion = conversion
+        self.fps = fps
     def add(self, box):
         tracker = SubTracker(self.image, box)
         self.trackers.append(tracker)
@@ -30,12 +33,12 @@ class Tracker:
         for tracker in self.trackers:
             boxes.append(tracker.current)
         return boxes
-    def saveData(self, output, conversion, fps):
+    def saveData(self):
         wb = Workbook()
         ws = wb.active
         now = datetime.now()
         elapsed = (now-self.start).total_seconds()
-        ws.append(["Time Started", "End Time", "Elasped Time (mins)"])
+        ws.append(["Time Started", "End Time", "Elapsed Time (mins)"])
         ws.append([self.start.strftime("%H:%M:%S"), now.strftime("%H:%M:%S"), '{:.2f}'.format(round(elapsed/60, 2))])
         ws.append(["Blob", "Distance (um)", "Displacement (um)", "Frames", "Speed (um/s)", "Velocity (um/s)", "Start Coordinates", "End Coordinates"])
         bold = Font(bold=True)
@@ -44,17 +47,17 @@ class Tracker:
         for i in range(len(self.trackers)):
             blob = f'Blob {i}' 
             tracker = self.trackers[i]           
-            distance = tracker.distance * conversion
-            displacement = tracker.displacement * conversion
+            distance = tracker.distance * self.conversion
+            displacement = tracker.displacement * self.conversion
             frames = tracker.frames
             if frames == 0:
                 continue
-            speed = distance / (frames/fps)
-            velocity = displacement / (frames/fps)
+            speed = distance / (frames/self.fps)
+            velocity = displacement / (frames/self.fps)
             initial = tracker.start
             final = tracker.current
             ws.append([blob, distance, displacement, frames, speed, velocity, str(initial), str(final)])
         
-        wb.save(output)
+        wb.save(self.output)
 
         

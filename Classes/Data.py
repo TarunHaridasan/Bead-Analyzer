@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 class Data:
-    #Load all every 5th image in the folder
+    #Load the images from the video
     def __init__(self, fp):
         self.fp = fp
         self.images = []
@@ -36,7 +36,7 @@ class Data:
         contours, hier = cv2.findContours(blob, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         contours = [c + 30 for c in contours]
         if len(contours)==0:
-            return
+            return []
         #Find 50th percentile area
         areas = []
         for cnt in contours:
@@ -52,26 +52,6 @@ class Data:
                 boundingBoxes.append([x,y,w,h])
         self.boundingBoxes = boundingBoxes
         return boundingBoxes
-    
-    # #New bead finder this dog shit doesn't work
-    # def blobFinder(self):
-    #     #Image analysis pipeline
-    #     img1 = self.get(0).copy()
-    #     img2 = img1[50:850, 50:750]
-    #     img3 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-    #     img4 = cv2.medianBlur(img3, 11)
-    #     limit = int(np.mean(img4) + ((np.std(img4)*2)))
-    #     ret, img5 = cv2.threshold(img4, limit, 255, cv2.THRESH_BINARY)
-    #     cv2.imshow("Binarized Image", img5)        
-    #     contours, hier = cv2.findContours(img5, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    #     contours = [c + 50 for c in contours]
-    #     img6 = img1.copy()
-    #     rect = [cv2.boundingRect(cnt) for cnt in contours]
-    #     for i in rect:
-    #         cv2.rectangle(img6, i, (255,0,0))           
-        
-    #     cv2.imshow("Contours", img6)
-
     #Return the bounding box the x,y coordinates are inside
     def findBox(self,x,y):
         for box in self.boundingBoxes:
@@ -79,15 +59,17 @@ class Data:
             x2,y2 = x1+w, y1+h
             if x>x1 and x<x2 and y>y1 and y<y2: #Inside
                 return [x1, y1, w, h]
-        return 0
+        return 0    
     #Remove bounding box
     def removeBounding(self, x, y):
         box = self.findBox(x,y)
         if box!=0:
-            self.boundingBoxes.remove(box)
+            self.boundingBoxes.remove(box)  
+        return self.boundingBoxes
     #Add bounding box
     def addBounding(self, x, y, x2,y2):
         w = x2-x
         h = y2-y
         self.boundingBoxes.append([x,y,w,h])
+        return self.boundingBoxes
             

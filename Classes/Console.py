@@ -12,6 +12,7 @@ class Console():
         item = QListWidgetItem(f'>[{time}] {message}')
         item.setForeground(QColor(colour[0], colour[1], colour[2]))
         self.widget.addItem(item)
+        self.widget.scrollToItem(item)
     #Purge the console
     def clear(self): 
         self.widget.clear()
