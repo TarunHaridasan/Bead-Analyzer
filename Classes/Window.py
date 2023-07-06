@@ -7,13 +7,12 @@ from Classes.Data import Data
 import sys
 import cv2
 from Classes.Console import Console
+from Classes.Queue import Queue
 import qdarktheme
 import time
 from Classes.Tracker import Tracker
-from PyQt5.QtCore import QObject, QThread, pyqtSignal, QThreadPool
+from PyQt5.QtCore import QObject, QThread, pyqtSignal, QThreadPool, QRunnable
 import os
-
-
 
 class Window():
     #Instantiate the main and settings window
@@ -40,10 +39,9 @@ class Window():
         self.addActive = 0
         self.addBoxStart=1
         self.newBoxCoordinates = []
-        self.Main.ui.start.clicked.connect(self.run)
-        
+        self.Main.ui.start.clicked.connect(self.run)        
         #Console window
-        self.console = Console(self.Main.ui.console)
+        self.console = Console(self.Main.ui.console)        
     
     #Display the window
     def start(self):
@@ -69,18 +67,19 @@ class Window():
         self.fps = self.Dialog.ui.fps.value()
         self.conversion = self.Dialog.ui.conversion.value()
 
+        self.inputFP = 'C:\\Users\\furio\\Desktop\\Bead-Analyzer\\Data'      
+        self.outputFP = 'C:\\Users\\furio\\Desktop\\Bead-Analyzer\\Data'    
+
         if self.inputFP == "" or self.outputFP == "" or self.fps == "" or self.conversion == "":
             return
 
-        self.queue = []
-        self.currentPosition = 0
+        self.queue = Queue(self.Main.ui.threadView)
+
         for i in os.listdir(self.inputFP):
-            self.queue.append(f'{self.inputFP}/{i}')
+            fp = f'{self.inputFP}\{i}'
+            self.queue.add(i, fp)
 
-        self.console.add(f'Settings Saved. Loaded {len(self.queue)} videos into queue.')
-
-        self.threadpool = QThreadPool()
-        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
+        self.console.add(f'Settings Saved. Loaded {self.queue.size()} videos into queue.')
        
     #Print image and bounding boxes
     def print(self, image):
@@ -150,21 +149,15 @@ class Window():
         self.updateList()
         self.console.add(f'Reset bounding boxes to default')
 
-    #Highlight bounding box
-    def highlightBounding(self, item):
-        index = self.ui.boundingBoxes.indexFromItem(item).row()
-        print(index)
-        self.data.print(self.data.get(0), index)
-
     #Open up the next video
     def runNext(self):
-        fp = self.queue[self.currentPosition]
-        self.folderName = fp.split("/")[-1]
+        name, fp = self.queue.getNext()
         self.data = Data(fp)
         self.data.findBeads()   
         self.print(self.data.get(0))     
         self.updateList()
-        self.console.add(f'Loaded {self.folderName}. {self.currentPosition}/{len((self.queue))} in queue')
+        self.queue.updateList()
+        self.console.add(f'Loaded {name}. {self.queue.cur+1}/{self.queue.size()} in queue')
 
     #Run the tracking on all the boxes
     def run(self):
@@ -173,16 +166,21 @@ class Window():
         for box in self.data.boundingBoxes:
             self.tracker.add(box)
 
-        self.thread = QThread()
-        self.worker = Worker(self.data, self.tracker)
-        self.worker.moveToThread(self.thread)
+        # self.thread = QThread()
+        # self.worker = Worker(self.data, self.tracker)
+        # self.worker.moveToThread(self.thread)
 
-        self.thread.started.connect(self.worker.run)
-        self.worker.progress.connect(self.reportAnalysisProgress)
-        self.worker.finished.connect(self.analysisFinished)
-        self.worker.finished.connect(self.thread.quit)
+        # self.thread.started.connect(self.worker.run)
+        # self.worker.progress.connect(self.reportAnalysisProgress)
+        # self.worker.finished.connect(self.analysisFinished)
+        # self.worker.finished.connect(self.thread.quit)
 
-        self.thread.start()
+        # self.thread.start()
+
+        worker = Worker(self.data, self.tracker)
+        worker.signals.progress.connect(self.reportAnalysisProgress)
+        self.queue.run(worker)
+
 
     def reportAnalysisProgress(self, i):
         progress = int((i/self.data.size)*100)
@@ -198,20 +196,40 @@ class Window():
         self.tracker.saveData(output, self.conversion, self.fps) #Also send fps and conversion
         self.console.add(f'Analysis completed. Data saved into {output}')
 
-#Analysis thread
-class Worker(QObject):
+# #Analysis thread
+# class Worker(QObject):
+#     finished = pyqtSignal()
+#     progress = pyqtSignal(int)
+
+#     def __init__(self, data, tracker):
+#         super().__init__()
+#         self.data = data
+#         self.tracker = tracker
+
+#     def run(self):
+#         for i in range(self.data.size):
+#             img = self.data.get(i)
+#             self.tracker.update(img)
+#             self.data.boundingBoxes = self.tracker.newBoxes()
+#             self.progress.emit(i)
+#         self.finished.emit()
+
+class Signals(QObject):
     finished = pyqtSignal()
     progress = pyqtSignal(int)
 
+#Analysis worker
+class Worker(QRunnable):
     def __init__(self, data, tracker):
         super().__init__()
         self.data = data
         self.tracker = tracker
+        self.signals = Signals()
 
     def run(self):
         for i in range(self.data.size):
             img = self.data.get(i)
             self.tracker.update(img)
             self.data.boundingBoxes = self.tracker.newBoxes()
-            self.progress.emit(i)
-        self.finished.emit()
+            self.signals.progress.emit(i)
+        print("DONE")

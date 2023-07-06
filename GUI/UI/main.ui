@@ -122,7 +122,7 @@ font-size: 18px;</string>
          </widget>
         </item>
         <item row="2" column="0" colspan="3">
-         <widget class="QListView" name="theadView"/>
+         <widget class="QListWidget" name="threadView"/>
         </item>
        </layout>
       </item>
