@@ -135,6 +135,7 @@ class Window():
     #Run the tracking on all the boxes
     def run(self):
         data = copy.deepcopy(self.data)
+        del self.data
         output = f'{self.outputFP}/{self.queue.current()}.xlsx'
         tracker = Tracker(data.get(0), output, self.conversion, self.fps)           
         for box in data.boundingBoxes:

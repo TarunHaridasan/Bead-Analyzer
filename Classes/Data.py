@@ -11,13 +11,12 @@ class Data:
         files = os.listdir(self.fp)
         for i in range(0,len(files)):
             item = files[i]
-            fp = f'{self.fp}//{item}'
-            image = cv2.imread(fp)
-            self.images.append(image)
+            self.images.append(f'{self.fp}//{item}')
         self.size = len(self.images)
     #Get an image
     def get(self, index):
-        return self.images[index]
+        fp = self.images[index]
+        return cv2.imread(fp)
     #Initially detect fluorescent beads off an image
     def findBeads(self):
         self.boundingBoxes = []
