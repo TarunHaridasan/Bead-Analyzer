@@ -5,7 +5,7 @@ from PyQt5.QtGui import QColor
 class Queue():
     def __init__(self, threadViewWidget):
         self.threadpool = QThreadPool()
-        self.threadpool.setMaxThreadCount(self.threadpool.maxThreadCount()/2)
+        self.threadpool.setMaxThreadCount(self.threadpool.maxThreadCount()//2)
         self.widget = threadViewWidget
         self.queue = []
         self.cur = -1
