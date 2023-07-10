@@ -5,11 +5,10 @@ from PyQt5.QtGui import QColor
 class Queue():
     def __init__(self, threadViewWidget):
         self.threadpool = QThreadPool()
-        self.threadpool.setMaxThreadCount(10)
+        self.threadpool.setMaxThreadCount(self.threadpool.maxThreadCount()//2)
         self.widget = threadViewWidget
         self.queue = []
         self.cur = -1
-        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
     #Add item to the queue
     def add(self, name, fp):
         self.queue.append([name, fp, 0, 0]) #name, fp, status, progress
