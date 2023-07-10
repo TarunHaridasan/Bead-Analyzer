@@ -22,7 +22,7 @@ class Window():
     def __init__(self):
         #Main window
         self.app = QtWidgets.QApplication(sys.argv)
-        qdarktheme.setup_theme(custom_colors={"primary": "#03c6fc"})
+        qdarktheme.setup_theme(custom_colors={"primary": "#FFFFFF"})
         self.Main = QtWidgets.QMainWindow()
         self.Main.ui = GUI.main.Ui_MainWindow()
         self.Main.ui.setupUi(self.Main)
@@ -82,10 +82,12 @@ class Window():
     #Activate/deactivate add mode
     def addMode(self):
         if not self.addActive:
-            self.console.add("Add mode - Activated")
+            self.console.add("Add Mode Activated")
+            self.Main.ui.add.setStyleSheet("background-color:black;")
             self.Main.ui.frame.mousePressEvent = self.addBox           
         else:
-            self.console.add("Add Mode - Deactivated")
+            self.console.add("Add Mode Deactivated")
+            self.Main.ui.add.setStyleSheet("background-color: transparent;")
             self.Main.ui.frame.mousePressEvent = lambda *args: None      
         self.addActive = not self.addActive   
 
@@ -101,10 +103,12 @@ class Window():
     #Activate/deactivate remove mode
     def removeMode(self):
         if not self.removeActive:
-            self.console.add("Remove Mode - Activated")
+            self.console.add("Remove Mode Activated")
+            self.Main.ui.add.setStyleSheet("background-color:black;")
             self.Main.ui.frame.mousePressEvent = self.removeBox                      
         else:
-            self.console.add("Remove Mode - Deactivated")
+            self.console.add("Remove Mode Deactivated")
+            self.Main.ui.add.setStyleSheet("background-color: transparent;")
             self.Main.ui.frame.mousePressEvent = lambda *args: None    
         self.removeActive = not self.removeActive     
 
@@ -127,7 +131,6 @@ class Window():
         bounding = data.findBeads()   
         self.frame.show(data.get(0), bounding)
         self.console.add(f'Loaded {name}. {self.queue.cur+1}/{self.queue.size()} in queue')
-        self.Main.ui.progressBar.setValue(0)       
         self.data = data
         if self.worker!=0:
             self.worker.signals.progress.disconnect()
@@ -148,15 +151,14 @@ class Window():
         self.worker = worker
         self.console.add("Analysis Started")
 
+    #Update each frame
     def updateProgress(self, progress, image, bounding, qid):
-        self.Main.ui.progressBar.setValue(progress)
         self.frame.show(image, bounding)
 
+    #Update when completed
     def analysisFinished(self, qid):        
         self.queue.completed(qid)
-        name = self.queue.getName(qid)
-        self.queue.setProgress(qid, 100)
-        self.console.add(f'Analysis For "{name}" Completed')
+        self.console.add(f'Analysis For "{self.queue.getName(qid)}" Completed')
 
 #Worker and signals
 class Signals(QObject):

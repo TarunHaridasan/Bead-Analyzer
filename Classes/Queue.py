@@ -51,6 +51,7 @@ class Queue():
     #Completed and change to green
     def completed(self, qid):
         self.queue[qid][2]=2
+        self.setProgress(qid, 100)
         self.updateList()
     #Set progress for a qid
     def setProgress(self, qid, progress):
