@@ -31,7 +31,8 @@ class Window():
         self.Dialog.ui = GUI.settings.Ui_Dialog()
         self.Dialog.ui.setupUi(self.Dialog)
         self.Main.ui.newAnalysis.triggered.connect(self.Dialog.exec)
-        self.Main.ui.actionNext.triggered.connect(self.runNext)
+        #self.Main.ui.actionNext.triggered.connect(self.runNext)
+        self.Main.ui.stop.clicked.connect(self.runNext)
         self.Dialog.ui.inputSearch.clicked.connect(self.searchInput)
         self.Dialog.ui.outputSearch.clicked.connect(self.searchOutput)
         self.Dialog.ui.buttonBox.accepted.connect(self.saveSettings)
@@ -47,7 +48,7 @@ class Window():
         #Additional widget windows
         self.console = Console(self.Main.ui.console)    
         self.queue = Queue(self.Main.ui.threadView) 
-        self.frame = Frame(self.Main.ui.frame, self.Main.ui.bboxes)       
+        self.frame = Frame(self.Main.ui.frame, self.Main.ui.bboxes, self.Main.ui.beadCount)     
 
     #Display the window
     def start(self):

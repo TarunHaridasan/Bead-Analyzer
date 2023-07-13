@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QThreadPool, QRunnable
 from PyQt5.QtWidgets import QListWidgetItem
 from PyQt5.QtGui import QColor
+from multiprocessing import Process
 
 class Queue():
     def __init__(self, threadViewWidget):
@@ -14,7 +15,7 @@ class Queue():
         self.queue.append([name, fp, 0, 0]) #name, fp, status, progress
         self.updateList() 
     #Queue the worker to be run when thread available           
-    def run(self, worker):
+    def run(self, worker):        
         self.threadpool.start(worker)
     #Update the queue window
     def updateList(self):

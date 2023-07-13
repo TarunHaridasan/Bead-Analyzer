@@ -2,9 +2,10 @@ from PyQt5.QtGui import QPixmap, QImage
 import cv2
 
 class Frame():
-    def __init__(self, frameWidget, beadsWidget):
+    def __init__(self, frameWidget, beadsWidget, lcd):
         self.widget = frameWidget
         self.beadsWidget = beadsWidget
+        self.lcd = lcd
     #Print the image and beads in appropriate window
     def show(self, image, bounding = []):
         self.clear()
@@ -17,9 +18,9 @@ class Frame():
         qImg = QImage(frame.data, width, height, bytesPerLine, QImage.Format_RGB888)
         pixmap = QPixmap(qImg)
         self.widget.setPixmap(pixmap)   
-        boxes = bounding
-        for i in range(len(boxes)):
-            self.beadsWidget.addItem(f'Bead {i}: {str(boxes[i])}') 
+        for i in range(len(bounding)):
+            self.beadsWidget.addItem(f'Bead {i}: {str(bounding[i])}') 
+        self.lcd.display(len(bounding))
     #Clear the image and beads from the window
     def clear(self):
         self.widget.clear()
