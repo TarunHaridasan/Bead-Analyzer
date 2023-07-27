@@ -22,7 +22,7 @@ class Window():
     def __init__(self):
         #Main window
         self.app = QtWidgets.QApplication(sys.argv)
-        qdarktheme.setup_theme(custom_colors={"primary": "#FFFFFF"})
+        qdarktheme.setup_theme(custom_colors={"primary": "#009AFF"})
         self.Main = QtWidgets.QMainWindow()
         self.Main.ui = GUI.main.Ui_MainWindow()
         self.Main.ui.setupUi(self.Main)
@@ -32,7 +32,7 @@ class Window():
         self.Dialog.ui.setupUi(self.Dialog)
         self.Main.ui.newAnalysis.triggered.connect(self.Dialog.exec)
         #self.Main.ui.actionNext.triggered.connect(self.runNext)
-        self.Main.ui.stop.clicked.connect(self.runNext)
+        self.Main.ui.next.clicked.connect(self.runNext)
         self.Dialog.ui.inputSearch.clicked.connect(self.searchInput)
         self.Dialog.ui.outputSearch.clicked.connect(self.searchOutput)
         self.Dialog.ui.buttonBox.accepted.connect(self.saveSettings)
@@ -79,16 +79,27 @@ class Window():
             self.queue.add(i, fp)
         self.console.add(f'Settings Saved. Loaded {self.queue.size()} videos into queue.')
         self.runNext()
+        self.Main.ui.add.setEnabled(True)
+        self.Main.ui.remove.setEnabled(True)
+        self.Main.ui.reset.setEnabled(True)
+        self.Main.ui.start.setEnabled(True)
+        self.Main.ui.next.setEnabled(True)
 
     #Activate/deactivate add mode
     def addMode(self):
         if not self.addActive:
             self.console.add("Add Mode Activated")
-            self.Main.ui.add.setStyleSheet("background-color:black;")
+            self.Main.ui.remove.setEnabled(False)
+            self.Main.ui.reset.setEnabled(False)
+            self.Main.ui.start.setEnabled(False)
+            self.Main.ui.next.setEnabled(False)
             self.Main.ui.frame.mousePressEvent = self.addBox           
         else:
             self.console.add("Add Mode Deactivated")
-            self.Main.ui.add.setStyleSheet("background-color: transparent;")
+            self.Main.ui.remove.setEnabled(True)
+            self.Main.ui.reset.setEnabled(True)
+            self.Main.ui.start.setEnabled(True)
+            self.Main.ui.next.setEnabled(True)
             self.Main.ui.frame.mousePressEvent = lambda *args: None      
         self.addActive = not self.addActive   
 
@@ -105,11 +116,18 @@ class Window():
     def removeMode(self):
         if not self.removeActive:
             self.console.add("Remove Mode Activated")
-            self.Main.ui.add.setStyleSheet("background-color:black;")
+            self.Main.ui.add.setEnabled(False)
+            self.Main.ui.reset.setEnabled(False)
+            self.Main.ui.start.setEnabled(False)
+            self.Main.ui.next.setEnabled(False)
             self.Main.ui.frame.mousePressEvent = self.removeBox                      
         else:
             self.console.add("Remove Mode Deactivated")
-            self.Main.ui.add.setStyleSheet("background-color: transparent;")
+            self.Main.ui.add.setEnabled(True)
+            self.Main.ui.reset.setEnabled(True)
+            self.Main.ui.start.setEnabled(True)
+            self.Main.ui.next.setEnabled(True)
+            
             self.Main.ui.frame.mousePressEvent = lambda *args: None    
         self.removeActive = not self.removeActive     
 
@@ -160,6 +178,16 @@ class Window():
     def analysisFinished(self, qid):        
         self.queue.completed(qid)
         self.console.add(f'Analysis For "{self.queue.getName(qid)}" Completed')
+
+    #Activate button
+    def showActive(self, buttonActivate, buttonDeactivate):
+        for button in buttonActivate:
+            button.setStyleSheet("background-color: #000E8A;")
+            button.setEnabled(False)
+        for button in buttonDeactivate:
+            button.setStyleSheet("background-color: transparent")
+            button.setEnabled(False)
+
 
 #Worker and signals
 class Signals(QObject):

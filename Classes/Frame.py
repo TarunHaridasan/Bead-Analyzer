@@ -24,5 +24,4 @@ class Frame():
     #Clear the image and beads from the window
     def clear(self):
         self.widget.clear()
-        self.beadsWidget.clear()
-    
+        self.beadsWidget.clear()    
