@@ -40,7 +40,7 @@ class Tracker:
         elapsed = (now-self.start).total_seconds()
         ws.append(["Time Started", "End Time", "Elapsed Time (mins)"])
         ws.append([self.start.strftime("%H:%M:%S"), now.strftime("%H:%M:%S"), '{:.2f}'.format(round(elapsed/60, 2))])
-        ws.append(["Blob", "Distance (um)", "Displacement (um)", "Frames", "Speed (um/s)", "Velocity (um/s)", "Start Coordinates", "End Coordinates"])
+        ws.append(["Blob", "Distance (um)", "Displacement (um)", "Frames", "Speed (um/s)", "Velocity (um/s)"])
         bold = Font(bold=True)
         for i in ["A1", "B1", "C1", "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"]:
             ws[i].font = bold      
@@ -56,7 +56,7 @@ class Tracker:
             velocity = displacement / (frames/self.fps)
             initial = tracker.start
             final = tracker.current
-            ws.append([blob, distance, displacement, frames, speed, velocity, str(initial), str(final)])
+            ws.append([blob, distance, displacement, frames, speed, velocity])
         
         wb.save(self.output)
 
