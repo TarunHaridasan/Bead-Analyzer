@@ -11,6 +11,8 @@ opencv-contrib-python = "*"
 pip = "*"
 install = "*"
 pyqtdarktheme = "*"
+pyinstaller = "*"
+pillow = "*"
 
 [dev-packages]
 

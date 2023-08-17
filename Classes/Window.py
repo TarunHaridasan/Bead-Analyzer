@@ -71,7 +71,6 @@ class Window():
         self.outputFP = self.Dialog.ui.outputFP.text()
         self.fps = self.Dialog.ui.fps.value()
         self.conversion = self.Dialog.ui.conversion.value()
-        self.outputFP = ".//Output"
         if self.inputFP == "" or self.outputFP == "" or self.fps == "" or self.conversion == "":
             return        
         for i in os.listdir(self.inputFP):
@@ -146,6 +145,8 @@ class Window():
     #Open up the next video
     def runNext(self):
         name, fp = self.queue.next()
+        if name==-1:
+            return
         data = Data(fp)
         bounding = data.findBeads()   
         self.frame.show(data.get(0), bounding)

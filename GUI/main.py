@@ -17,6 +17,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(1300, 980)
         MainWindow.setMinimumSize(QtCore.QSize(1300, 980))
         MainWindow.setMaximumSize(QtCore.QSize(1300, 980))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("./icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("font-family: Calibri;\n"
 "font-size: 17px;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -148,13 +151,3 @@ class Ui_MainWindow(object):
         self.newAnalysis.setText(_translate("MainWindow", "New"))
         self.actionNext.setText(_translate("MainWindow", "Next"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

@@ -38,6 +38,8 @@ class Queue():
     #Go to the next item in the queue
     def next(self):
         self.cur+=1
+        if self.cur>=len(self.queue):
+            return -1, -1
         self.queue[self.cur][2]=1
         item = self.queue[self.cur]
         self.updateList()

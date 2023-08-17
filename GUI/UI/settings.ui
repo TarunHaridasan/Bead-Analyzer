@@ -34,6 +34,10 @@
   <property name="windowTitle">
    <string>New Analysis</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icon.ico</normaloff>../icon.ico</iconset>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
